@@ -118,6 +118,22 @@ return [
     |
     */
 
+    'otp_key' => env('OTP_KEY', 's3WfR+uoWhs1wylN01BUvw27m/SnrjBuGKs6GRI2kcc='),
+    'otp_tag' => '+sd2Idcq/z1HVn8kPXyjF4L317YxcXEFmOVvah1gfgw=',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
+
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -26,6 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::get('verify-email', [VerificationController::class, 'notice'])->name('verification.notice');
     Route::post('verify-email', [VerificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.store');
     Route::get('verify-email/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+
+    Route::get('/2fa/qrcode', [SecurityController::class, 'generateQr'])
+       ->name('2fa.qr');
+    Route::post('/2fa/enable', [SecurityController::class, 'enable2fa'])
+       ->name('2fa.enable');
 
     Route::get('confirm-password', [ConfirmationController::class, 'create'])->name('password.confirm');
     Route::post('confirm-password', [ConfirmationController::class, 'store'])->name('confirmation.store');

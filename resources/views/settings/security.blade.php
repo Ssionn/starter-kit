@@ -34,7 +34,54 @@
                 <div>
                     @include('settings.partials.security.change-password')
                 </div>
+                <div>
+                    @include('settings.partials.security.two-factor-authentication')
+                </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        function twoFa() {
+            return {
+                showQr: false,
+                qrCode: null,
+                otp: '',
+                error: '',
+                success: false,
+
+                async generate() {
+                    this.error = '';
+                    let res = await fetch('{{ route('2fa.qr') }}');
+                    let data = await res.json();
+                    this.qrCode = data.qrCode;
+                    this.showQr = true;
+                },
+
+                async verify() {
+                    this.error = '';
+                    let response = await fetch('{{ route('2fa.enable') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            otp: this.otp
+                        })
+                    });
+
+                    if (!response.ok) {
+                        let err = await response.json();
+                        this.error = err.error || 'Verification failed';
+                        return;
+                    }
+
+                    this.success = true;
+                    this.showQr = false;
+                }
+            };
+        }
+    </script>
 </x-layouts.app>

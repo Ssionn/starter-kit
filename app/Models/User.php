@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google2fa_secret',
+        'google2fa_enabled',
     ];
 
     /**
@@ -31,6 +33,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'google2fa_secret',
         'remember_token',
     ];
 
@@ -43,6 +46,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'google2fa_enabled' => 'boolean',
             'password' => 'hashed',
         ];
     }
