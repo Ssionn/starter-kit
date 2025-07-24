@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class PasswordController extends Controller
+class SecurityController extends Controller
 {
     public function edit(Request $request): View
     {
-        return view('settings.password', [
+        return view('settings.security', [
             'user' => $request->user(),
         ]);
     }
